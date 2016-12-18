@@ -1,0 +1,19 @@
+.readinglist-meta-label {
+	font-weight: bold;
+	clear: both;
+	float: left;
+}
+
+.meta-th {
+	width: 50%;
+	overflow: auto;
+}
+
+.readinglist-meta-input {
+	float: right;
+}
+
+#average_button {
+	float: right;
+}
+
