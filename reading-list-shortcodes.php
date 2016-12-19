@@ -64,18 +64,19 @@ function readinglist_list_output($atts, $content = null) {
 			//Gets the post meta containing start and end dates and makes a new DateTime out of it (to format it later)
 			$start = new DateTime(get_post_meta(get_the_ID(), 'start_date', true));
 			$end = new DateTime(get_post_meta(get_the_ID(), 'end_date', true));
+			$amazon = get_post_meta(get_the_ID(),'amazonlink', true);
 
 			//Global post variable to refer.
 			global $post;
 
 			//Starts the HTML out. The whole book displaying process is done by appending the text in html
-			$html_out .= '<div class="book_block"><img class="book_image" src="';
+			$html_out .= '<div class="book_block"><a target="_blank" href= "' . $amazon . '"><img class="book_image" src="';
 			if(has_post_thumbnail()) { 
 				$html_out .= get_the_post_thumbnail_url();
 			} else {
 				$html_out .= plugins_url('/reading-list/default.png');
 			}
-			$html_out .= '">'; //Closing <img>
+			$html_out .= '"></a>'; //Closing <img>
 			$html_out .= '<div class="actual_content">';
 
 			$html_out .= '<p><strong>Book Title: </strong>' . the_title('','',false) . '</p>';
@@ -84,6 +85,7 @@ function readinglist_list_output($atts, $content = null) {
 			$html_out .= '<p><strong>Start Date: </strong>' . $start->format('d F, o') . '</p>';
 			$html_out .= '<p><strong>End Date: </strong>' . $end->format('d F, o') . '</p>';
 			$html_out .= '<p><strong>Pages/Day: </strong>' . get_post_meta(get_the_ID(),'averagepages', true) . '</p>';
+			$html_out .= '<p><strong><a target="_blank" href="' . $amazon . '">' . 'See on Amazon' . '</a></strong></p>';
 
 			$html_out .= '</div>'; //Closing actual_content
 			$html_out .= '</div>'; //Closing book_block
