@@ -61,9 +61,17 @@ function readinglist_list_output($atts, $content = null) {
 			//Gets the next post in line and iterates one up
 			$query_results->the_post();
 
+			$start_string = get_post_meta(get_the_ID(), 'start_date', true);
+			$end_string = get_post_meta(get_the_ID(), 'end_date', true);
+
+			$start = new DateTime($start_string);
+			$end = new DateTime($end_string);
+
+			$display_end = $end_string != "" ? $end->format('d F, o') : 'Not Started';
+			$display_start = $start_string != "" ? $start->format('d F, o') : 'Not Started';
+
 			//Gets the post meta containing start and end dates and makes a new DateTime out of it (to format it later)
-			$start = new DateTime(get_post_meta(get_the_ID(), 'start_date', true));
-			$end = new DateTime(get_post_meta(get_the_ID(), 'end_date', true));
+			
 			$amazon = get_post_meta(get_the_ID(),'amazonlink', true);
 
 			//Global post variable to refer.
@@ -82,8 +90,8 @@ function readinglist_list_output($atts, $content = null) {
 			$html_out .= '<p><strong>Book Title: </strong>' . the_title('','',false) . '</p>';
 			$html_out .= '<p><strong>Author: </strong>' . get_post_meta(get_the_ID(), 'author', true) . '</p>';
 			$html_out .= '<p><strong># of Pages: </strong>' . get_post_meta(get_the_ID(), 'pagecount', true) . '</p><br>';
-			$html_out .= '<p><strong>Start Date: </strong>' . $start->format('d F, o') . '</p>';
-			$html_out .= '<p><strong>End Date: </strong>' . $end->format('d F, o') . '</p>';
+			$html_out .= '<p><strong>Start Date: </strong>' . $display_start . '</p>';
+			$html_out .= '<p><strong>End Date: </strong>' . $display_end . '</p>';
 			$html_out .= '<p><strong>Pages/Day: </strong>' . get_post_meta(get_the_ID(),'averagepages', true) . '</p>';
 			$html_out .= '<p><strong><a target="_blank" href="' . $amazon . '">' . 'View on Amazon' . '</a></strong></p>';
 
