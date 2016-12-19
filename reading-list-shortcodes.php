@@ -68,7 +68,7 @@ function readinglist_list_output($atts, $content = null) {
 			$end = new DateTime($end_string);
 
 			$display_end = $end_string != "" ? $end->format('d F, o') : 'Not Started';
-			$display_start = $start_string != "" ? $start->format('d F, o') : 'Not Started';
+			$display_start = $start_string != "" ? $start->format('d F, o') : 'Not Finished';
 
 			//Gets the post meta containing start and end dates and makes a new DateTime out of it (to format it later)
 			
