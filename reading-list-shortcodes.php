@@ -85,7 +85,7 @@ function readinglist_list_output($atts, $content = null) {
 			$html_out .= '<p><strong>Start Date: </strong>' . $start->format('d F, o') . '</p>';
 			$html_out .= '<p><strong>End Date: </strong>' . $end->format('d F, o') . '</p>';
 			$html_out .= '<p><strong>Pages/Day: </strong>' . get_post_meta(get_the_ID(),'averagepages', true) . '</p>';
-			$html_out .= '<p><strong><a target="_blank" href="' . $amazon . '">' . 'See on Amazon' . '</a></strong></p>';
+			$html_out .= '<p><strong><a target="_blank" href="' . $amazon . '">' . 'View on Amazon' . '</a></strong></p>';
 
 			$html_out .= '</div>'; //Closing actual_content
 			$html_out .= '</div>'; //Closing book_block
