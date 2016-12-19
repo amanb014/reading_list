@@ -69,33 +69,33 @@ function readinglist_list_output($atts, $content = null) {
 			global $post;
 
 			//Starts the HTML out. The whole book displaying process is done by appending the text in html
-			$html_out .= "<div class=\"book_block\"><img class=\"book_image\" src=\"";
+			$html_out .= '<div class="book_block"><img class="book_image" src="';
 			if(has_post_thumbnail()) { 
 				$html_out .= get_the_post_thumbnail_url();
 			} else {
 				$html_out .= plugins_url('/reading-list/default.png');
 			}
-			$html_out .= "\">"; //Closing <img>
-			$html_out .= "<div class=\"actual_content\">";
+			$html_out .= '">'; //Closing <img>
+			$html_out .= '<div class="actual_content">';
 
-			$html_out .= "<p><strong>Book Title: </strong>" . the_title("","",false) . "</p>";
-			$html_out .= "<p><strong>Author: </strong>" . get_post_meta(get_the_ID(), 'author', true) . "</p>";
-			$html_out .= "<p><strong># of Pages: </strong>" . get_post_meta(get_the_ID(), 'pagecount', true) . "</p><br>";
-			$html_out .= "<p><strong>Start Date: </strong>" . $start->format('d F, o') . "</p>";
-			$html_out .= "<p><strong>End Date: </strong>" . $end->format('d F, o') . "</p>";
-			$html_out .= "<p><strong>Pages/Day: </strong>" . get_post_meta(get_the_ID(),'averagepages', true) . "</p>";
+			$html_out .= '<p><strong>Book Title: </strong>' . the_title('','',false) . '</p>';
+			$html_out .= '<p><strong>Author: </strong>' . get_post_meta(get_the_ID(), 'author', true) . '</p>';
+			$html_out .= '<p><strong># of Pages: </strong>' . get_post_meta(get_the_ID(), 'pagecount', true) . '</p><br>';
+			$html_out .= '<p><strong>Start Date: </strong>' . $start->format('d F, o') . '</p>';
+			$html_out .= '<p><strong>End Date: </strong>' . $end->format('d F, o') . '</p>';
+			$html_out .= '<p><strong>Pages/Day: </strong>' . get_post_meta(get_the_ID(),'averagepages', true) . '</p>';
 
-			$html_out .= "</div>"; //Closing actual_content
-			$html_out .= "</div>"; //Closing book_block
+			$html_out .= '</div>'; //Closing actual_content
+			$html_out .= '</div>'; //Closing book_block
 		}
 	} 
 
 	//if there are no posts.. then display some text. 
 	else {
-		$html_out .= "<p class=\"error\">There are no books in this status.</p>";
+		$html_out .= '<p class="error">There are no books in this status.</p>';
 	}
 				
-	$html_out .= "</div>"; //Closing book_list
+	$html_out .= '</div>'; //Closing book_list
 
 	wp_reset_postdata();
 
