@@ -103,10 +103,10 @@ function readinglist_list_output($atts, $content = null) {
 	if($query_results->max_num_pages > 1 && is_page()) {
 		$html_out .= '<nav class="prev-next-posts">';
 		$html_out .= '<div class="nav-previous">';
-		$html_out .= get_next_posts_link('<span class="meta-nav">&larr;</span> Newer', $query_results->max_num_pages);
+		$html_out .= get_next_posts_link('<span class="meta-nav">&larr;</span> Older', $query_results->max_num_pages);
 		$html_out .= '</div>';
 		$html_out .= '<div class="nav-next">';
-		$html_out .= get_previous_posts_link('<span class="meta-nav">&rarr;</span> Older');
+		$html_out .= get_previous_posts_link('<span class="meta-nav">&rarr;</span> Newer');
 		$html_out .= '</div>';
 		$html_out .= '</nav>';
 	}
