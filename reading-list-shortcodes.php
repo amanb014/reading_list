@@ -36,6 +36,8 @@ function readinglist_list_output($atts, $content = null) {
 		array(
 			'post_type' => 'book',
 			'post_status' => 'publish',
+			'orderby' => 'date',
+			'order' => 'ASC',
 			'no_found_rows' => false,
 			'posts_per_page' => $atts['count'],
 			'paged' => $paged,
@@ -49,7 +51,7 @@ function readinglist_list_output($atts, $content = null) {
 		)
 	);
 
-	$html_out = "<div id=\"book_list\">";
+	$html_out = '<div id="book_list">';
 		
 	//If we have posts.. then continue.
 	if($query_results->have_posts()) {
@@ -73,7 +75,7 @@ function readinglist_list_output($atts, $content = null) {
 			} else {
 				$html_out .= plugins_url('/reading-list/default.png');
 			}
-			$html_out .= '">'; //Closing <img>
+			$html_out .= "\">"; //Closing <img>
 			$html_out .= "<div class=\"actual_content\">";
 
 			$html_out .= "<p><strong>Book Title: </strong>" . the_title("","",false) . "</p>";
@@ -101,10 +103,10 @@ function readinglist_list_output($atts, $content = null) {
 	if($query_results->max_num_pages > 1 && is_page()) {
 		$html_out .= '<nav class="prev-next-posts">';
 		$html_out .= '<div class="nav-previous">';
-		$html_out .= get_next_posts_link('<span class="meta-nav">&larr;</span> Previous', $query_results->max_num_pages);
+		$html_out .= get_next_posts_link('<span class="meta-nav">&larr;</span> Newer', $query_results->max_num_pages);
 		$html_out .= '</div>';
 		$html_out .= '<div class="nav-next">';
-		$html_out .= get_previous_posts_link('<span class="meta-nav">&rarr;</span> Next');
+		$html_out .= get_previous_posts_link('<span class="meta-nav">&rarr;</span> Older');
 		$html_out .= '</div>';
 		$html_out .= '</nav>';
 	}
