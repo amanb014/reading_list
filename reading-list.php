@@ -3,7 +3,7 @@
   Plugin Name: Reading List
   Plugin URI: http://dontjudgecovers.com/
   Description: A plugin to create several lists of books (currently reading, read, and to read). Retreiving book data from Amazon and displaying it on a page. 
-  Version: 0.1
+  Version: 0.5
   Author: Aman Bhimani
   Author URI: http://amanbhimani.com/
   */

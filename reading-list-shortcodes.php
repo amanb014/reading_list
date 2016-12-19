@@ -28,6 +28,10 @@ function readinglist_list_output($atts, $content = null) {
 	$query_results = new WP_Query(
 		array(
 			'post_type' => 'book',
+			'post_status' => 'publish',
+			'no_found_rows' => false,
+			'posts_per_page' => $atts['count'],
+			'paged' => $paged,
 			'tax_query' 	=> array(
 									array(
 										'taxonomy' 		=> 'status',
@@ -35,12 +39,6 @@ function readinglist_list_output($atts, $content = null) {
 										'terms' 		=>  $tax,
 									)
 								),
-			'orderby' => 'menu_order',
-			'order' => 'ASC',
-			'no_found_rows' => true,
-			'update_post_term_cache' => false,
-			'post_status' => 'publish',
-			'posts_per_page' => $atts['count'],
 		)
 	);
 
@@ -82,6 +80,19 @@ function readinglist_list_output($atts, $content = null) {
 	}
 				
 	$html_out .= "</div>"; //Closing book_list
+
+	wp_reset_postdata();
+
+	if($query_results->max_num_pages > 1 && is_page()) {
+		$html_out .= '<nav class="prev-next-posts">';
+		$html_out .= '<div class="nav-previous">';
+		$html_out .= get_next_posts_link('<span class="meta-nav">&larr;</span> Previous', $query_results->max_num_pages);
+		$html_out .= '</div>';
+		$html_out .= '<div class="nav-next">';
+		$html_out .= get_previous_posts_link('<span class="meta-nav">&rarr;</span> Next');
+		$html_out .= '</div>';
+		$html_out .= '</nav>';
+	}
 
 	return $html_out;
 
