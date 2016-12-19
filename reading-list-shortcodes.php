@@ -1,30 +1,37 @@
 <?php
 
+//File for any shortcodes to be used by the system.
+
+//This shortcode is for the different lists that are supported by the readinglist.
+//Currently, there is a "currently-reading", "future-reading", and "past"
+//Also supports pagination.
 function readinglist_list_output($atts, $content = null) {
+	
+	//if one of the parameters is not defined from the shortcode, these are the defaults to be used.
 	$atts = shortcode_atts( array(
 		'status' => 'future',
 		'pagination' => true,
 		'count' => 5,
 	), $atts );
 
+	//depending on which status is selected in shortcode, the "taxonomy" is edited.
 	switch($atts['status']) {
 		case "current":
-			//$query_results = readinglist_get_current($atts);
 			$tax = "currently-reading";
 		break;
 		case "future":
-			//$query_results = readinglist_get_future($atts);
 			$tax = "future-reading";
 		break;
 		case "past":
-			// $query_results = readinglist_get_past($atts);
 			$tax = "read";
 		break;
 	}
 
 
+	//Pagination is dependent on this.
 	$paged = get_query_var('paged') ? get_query_var('paged') : 1;
 
+	//The query for the post type, to get all the posts.
 	$query_results = new WP_Query(
 		array(
 			'post_type' => 'book',
@@ -44,18 +51,22 @@ function readinglist_list_output($atts, $content = null) {
 
 	$html_out = "<div id=\"book_list\">";
 		
+	//If we have posts.. then continue.
 	if($query_results->have_posts()) {
 
+		//While there are posts, loop this whole thing. This represents every single book there is in the list to be displayed.
 		while($query_results->have_posts()) {
+			//Gets the next post in line and iterates one up
 			$query_results->the_post();
-			$start_orig = get_post_meta(get_the_ID(), 'start_date', true);
-			$end_orig = get_post_meta(get_the_ID(), 'end_date', true);
 
-			$start = new DateTime($start_orig);
-			$end = new DateTime($end_orig);
+			//Gets the post meta containing start and end dates and makes a new DateTime out of it (to format it later)
+			$start = new DateTime(get_post_meta(get_the_ID(), 'start_date', true));
+			$end = new DateTime(get_post_meta(get_the_ID(), 'end_date', true));
 
+			//Global post variable to refer.
 			global $post;
 
+			//Starts the HTML out. The whole book displaying process is done by appending the text in html
 			$html_out .= "<div class=\"book_block\"><img class=\"book_image\" src=\"";
 			if(has_post_thumbnail()) { 
 				$html_out .= get_the_post_thumbnail_url();
@@ -75,7 +86,10 @@ function readinglist_list_output($atts, $content = null) {
 			$html_out .= "</div>"; //Closing actual_content
 			$html_out .= "</div>"; //Closing book_block
 		}
-	} else {
+	} 
+
+	//if there are no posts.. then display some text. 
+	else {
 		$html_out .= "<p class=\"error\">There are no books in this status.</p>";
 	}
 				
@@ -83,6 +97,7 @@ function readinglist_list_output($atts, $content = null) {
 
 	wp_reset_postdata();
 
+	//Pagination if there are more than one page to be displayed. Pagination is always on, and the default number of items per page is 5. The user can set this number by defining "count" in the shortcode.
 	if($query_results->max_num_pages > 1 && is_page()) {
 		$html_out .= '<nav class="prev-next-posts">';
 		$html_out .= '<div class="nav-previous">';
@@ -94,10 +109,11 @@ function readinglist_list_output($atts, $content = null) {
 		$html_out .= '</nav>';
 	}
 
+	//Returns the HTML to be displayed for all the books (including pagination)
 	return $html_out;
 
 }
 
+//Registers the shortcode [readinglist]
 add_shortcode('readinglist', 'readinglist_list_output');
-
 ?>

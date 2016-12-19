@@ -1,10 +1,15 @@
 <?php
-add_action('init','readinglist_register_post_type');
+
+//This file creates the post type of "book". 
+//The custom fields for the book are contained in reading-list-fields.php where the admin page is created.
+
 function readinglist_register_post_type() {
 
   $singular = 'Book';
   $plural = 'Books';
 
+
+  //All the labels that wordpress uses at several places. Plural name is used when needed. 
   $labels = array(
       'name'                => $plural,
       'singular_name'       => $singular,
@@ -25,6 +30,9 @@ function readinglist_register_post_type() {
       'remove_featured_image' => 'Remove ' . $singular . 'Cover'
   );
 
+  //Public means that everyone (admins) can access and edit the post type.
+  //Shows in menu, and admin bar (to create)
+  //supports the title (which is used for Book title), and thumbnail which is the book cover.
   $args = array(
       'labels' => $labels,
       'public' => true,
@@ -47,6 +55,10 @@ function readinglist_register_post_type() {
       'can_export' => true
   );
 
+  //Registers the post type 'book' with wordpress. This keyword is really important for any other reference made to the post type in code. 
   register_post_type('book', $args);
 }
+
+//Init means when the plugin is activated, the post type is registered. 
+add_action('init','readinglist_register_post_type');
 ?>

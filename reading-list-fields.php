@@ -1,6 +1,7 @@
 <?php
 	
-	function readinglist_add_metabox_dates() {
+	//Meta box for the custom values. 
+	function readinglist_add_metaboxes() {
 
 		add_meta_box(
 			'bookinfo',
@@ -11,7 +12,8 @@
 			'core'
 		);
 	}
-	add_action('add_meta_boxes', 'readinglist_add_metabox_dates');
+	// Adds the meta box while all other meta boxes are being created. 
+	add_action('add_meta_boxes', 'readinglist_add_metaboxes');
 
 
 	function readinglist_book_info_callback( $post ) {
@@ -19,6 +21,8 @@
 
 		$readinglist_stored_meta = get_post_meta($post->ID);
 
+		//After this point, the HTML is made for the custom post type meta box
+		//All the CSS is defined in scripts/css/reading-list.css (admin only)
 ?>
 		<div>
 			<div class="meta-row">
@@ -50,6 +54,8 @@
 <?php
 	}
 
+	//Saves all the information typed in the meta boxes (if changed)
+	//Uses html POST function to grab the data. 
 	function readinglist_meta_save($post_id) {
 
 		$is_autosave = wp_is_post_autosave($post_id);
@@ -60,9 +66,12 @@
 			return;
 		}
 
+		//'author' is for the book author. Not to be confused with post-author that worpress uses by default for post authors.
 		if(isset($_POST['author'])) {
 			update_post_meta($post_id, 'author', sanitize_text_field($_POST['author']));
 		}
+
+		//start_date is defined for the start 
 		if(isset($_POST['start_date'])) {
 			update_post_meta($post_id, 'start_date', sanitize_text_field($_POST['start_date']));
 		}
@@ -85,6 +94,7 @@
 
 
 	}
-	add_action('save_post', 'readinglist_meta_save');
 
+	//adds the action when the post is saving. So that the information entered in the fields is saved to the post.
+	add_action('save_post', 'readinglist_meta_save');
 ?>
