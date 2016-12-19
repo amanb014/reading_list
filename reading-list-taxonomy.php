@@ -1,5 +1,6 @@
 <?php
-add_action('init', 'readinglist_register_taxonomy');
+
+//Registers the taxonomy "status" This is used for the statuses such as "currently reading", "future reading", and read. 
 function readinglist_register_taxonomy() {
 
 	$s 	= 'Status';
@@ -36,9 +37,10 @@ function readinglist_register_taxonomy() {
 	);
 	register_taxonomy('status', 'book', $args);
 }
-
+add_action('init', 'readinglist_register_taxonomy');
 
 //No need for parent taxonomy in this case. There are no child/parents. 
+//This basically removes the parent boxes from both pages (to create new post), and new taxonomy
 add_action('admin_head','remove_status_parent');
 function remove_status_parent() {
   global $pagenow, $typenow;
@@ -54,11 +56,14 @@ function remove_status_parent() {
 }
 
 //Change checkboxes to radio buttons
+//This is done so that you cannot select more than one status for the book.
+//ob_start creates a stream of HTMl that is being displayed to be stored in the variable instead of outputting it.
 add_action('add_meta_boxes','readinglist_radio_buttons','book',2);
 function readinglist_radio_buttons($post_type, $post) {
   ob_start();
 }
 
+//This function takes the ob_start() and ends it. Replaces all "checkbox" with "radio" buttons in the section that was streamed to it. 
 add_action('dbx_post_sidebar','mysite_dbx_post_sidebar');
 function mysite_dbx_post_sidebar() {
   $html = ob_get_clean();
