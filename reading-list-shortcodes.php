@@ -14,20 +14,6 @@ function readinglist_list_output($atts, $content = null) {
 		'count' => 5,
 	), $atts );
 
-	//depending on which status is selected in shortcode, the "taxonomy" is edited.
-	switch($atts['status']) {
-		case "current":
-			$tax = "currently-reading";
-		break;
-		case "future":
-			$tax = "future-reading";
-		break;
-		case "past":
-			$tax = "read";
-		break;
-	}
-
-
 	//Pagination is dependent on this.
 	$paged = get_query_var('paged') ? get_query_var('paged') : 1;
 
@@ -45,7 +31,7 @@ function readinglist_list_output($atts, $content = null) {
 									array(
 										'taxonomy' 		=> 'status',
 										'field' 		=> 'slug',
-										'terms' 		=>  $tax,
+										'terms' 		=>  $atts['status'],
 									)
 								),
 		)
